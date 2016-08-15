@@ -1,0 +1,4 @@
+package: github.com/pivotal-sg/pairing
+import:
+- package: github.com/urfave/cli
+  version: ^1.18.0
