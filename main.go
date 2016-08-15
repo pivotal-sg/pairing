@@ -13,12 +13,7 @@ func main() {
 	app.Name = "pairing"
 	app.Usage = "Manage your pairing needs.  Like low BO, or high caffeine"
 	app.Commands = []cli.Command{
-		cli.Command{
-			Name: "vim",
-			Subcommands: []cli.Command{
-				vim.Command,
-			},
-		},
+		vim.Command,
 	}
 
 	if err := app.Run(os.Args); err != nil {
