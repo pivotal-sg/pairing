@@ -76,7 +76,7 @@ func linkCustomConfig(newPreConfig, newConfig string) error {
 }
 
 // RelinkCommand the urfave/cli command for manually relinking
-var RelinkCommand cli.Command = cli.Command{
+var RelinkCommand = cli.Command{
 	Name:  "relink",
 	Usage: "Manually specify the directories you want as your preconfig and custom config.  Either are optional",
 	Flags: []cli.Flag{
