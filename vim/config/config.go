@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
+	_ "github.com/pivotal-sg/pairing/config"
 	"github.com/spf13/viper"
 )
 
