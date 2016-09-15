@@ -3,34 +3,20 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var (
-	customPreConfig           = "~/.config/nvim/custom_preconfig"
-	customConfig              = "~/.config/nvim/custom_config"
 	preConfigFlag, configFlag string
 )
 
 // init the config directories.  This defaults to the neovim location
 // because that is much nicer, it also sets up your flags
 func init() {
-	var err error
-	customPreConfig, err = filepath.Abs(customPreConfig)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%g\n", err)
-		os.Exit(1)
-	}
-	customConfig, err = filepath.Abs(customConfig)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%g\n", err)
-		os.Exit(1)
-	}
-
-	Relink.Flags().StringVar(&preConfigFlag, "pre-conf", customPreConfig, "Directory of the custom preconfig")
-	Relink.Flags().StringVar(&configFlag, "conf", customPreConfig, "Directory of the custom config")
+	Relink.Flags().StringVar(&preConfigFlag, "pre-conf", "", "Directory of the custom preconfig")
+	Relink.Flags().StringVar(&configFlag, "conf", "", "Directory of the custom config")
 }
 
 // deleteIfSymlink will delete the pre and custom config dirs
@@ -63,6 +49,7 @@ func deleteIfSymlink(filename string) error {
 // expected errors may os permission or file errors, as you would
 // expect from  a file manipulation function
 func linkCustomConfig(newPreConfig, newConfig string) error {
+	customPreConfig, customConfig := viper.GetString("vim.CustomPreConfig"), viper.GetString("vim.CustomConfig")
 	for _, conf := range []string{customPreConfig, customConfig} {
 		if err := deleteIfSymlink(conf); err != nil {
 			return err
@@ -86,6 +73,8 @@ var Relink = &cobra.Command{
 	Use:   "relink",
 	Short: "Manually specify the directories you want as your preconfig and custom config.  Either are optional",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return linkCustomConfig(preConfigFlag, configFlag)
+		fmt.Println(viper.GetString("vim.CustomPreConfig"), viper.GetString("vim.CustomConfig"))
+		fmt.Println(viper.GetString("vim.pre-config"), viper.GetString("vim.config"))
+		return linkCustomConfig(viper.GetString("pre-config"), viper.GetString("config"))
 	},
 }

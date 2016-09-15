@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/pivotal-sg/pairing/vim"
+	_ "github.com/pivotal-sg/pairing/vim/config"
 	"github.com/spf13/cobra"
 )
 
