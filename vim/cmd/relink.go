@@ -15,16 +15,18 @@ var (
 )
 
 // init the config directories.  This defaults to the neovim location
-// because that is much nicer
+// because that is much nicer, it also sets up your flags
 func init() {
 	var err error
 	customPreConfig, err = filepath.Abs(customPreConfig)
 	if err != nil {
-		panic(err.Error())
+		fmt.Fprintf(os.Stderr, "%g\n", err)
+		os.Exit(1)
 	}
 	customConfig, err = filepath.Abs(customConfig)
 	if err != nil {
-		panic(err.Error())
+		fmt.Fprintf(os.Stderr, "%g\n", err)
+		os.Exit(1)
 	}
 
 	Relink.Flags().StringVar(&preConfigFlag, "pre-conf", customPreConfig, "Directory of the custom preconfig")

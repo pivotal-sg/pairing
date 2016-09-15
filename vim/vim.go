@@ -9,7 +9,8 @@ func init() {
 	Command.AddCommand(cmd.Relink)
 }
 
-// Command is the `urfave/cli` subcommand for vim
+// Command is the `spf13/cobra` subcommand for vim, it holds the pairing specific
+// subcommands, which are setup in the init function
 var Command = &cobra.Command{
 	Use:   "vim",
 	Short: "vim is a collection of commands for managing paring configs for vim",
