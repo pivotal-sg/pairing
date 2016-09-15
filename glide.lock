@@ -1,6 +1,14 @@
-hash: eba9456283f9fa8f6335470d7af98f7d7372a1a1ab20d924c10109d452020419
-updated: 2016-08-15T11:40:03.492242271+08:00
+hash: 6981d8537bc51b6ef9f1fbcd11c9b529d29eef5f5b343cae19f72e753ed7d75f
+updated: 2016-09-15T14:38:22.118174629+08:00
 imports:
+- name: github.com/inconshreveable/mousetrap
+  version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/spf13/cobra
+  version: 9c28e4bbd74e5c3ed7aacbc552b2cab7cfdfe744
+  subpackages:
+  - cobra
+- name: github.com/spf13/pflag
+  version: 7b17cc4658ef5ca157b986ea5c0b43af7938532b
 - name: github.com/urfave/cli
-  version: 1efa31f08b9333f1bd4882d61f9d668a70cd902e
+  version: a14d7d367bc02b1f57d88de97926727f2d936387
 testImports: []

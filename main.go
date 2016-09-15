@@ -5,21 +5,22 @@ import (
 	"os"
 
 	"github.com/pivotal-sg/pairing/vim"
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 )
 
 var version string
 
-func main() {
-	app := cli.NewApp()
-	app.Name = "pairing"
-	app.Usage = "Manage your pairing needs.  Like low BO, or high caffeine"
-	app.Version = version
-	app.Commands = []cli.Command{
-		vim.Command,
-	}
+var rootCommand = &cobra.Command{
+	Use: "pairing",
+}
 
-	if err := app.Run(os.Args); err != nil {
+func init() {
+	rootCommand.AddCommand(vim.Command)
+}
+
+func main() {
+	if err := rootCommand.Execute(); err != nil {
 		fmt.Println(err.Error())
+		os.Exit(1)
 	}
 }

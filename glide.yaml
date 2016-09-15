@@ -2,3 +2,7 @@ package: github.com/pivotal-sg/pairing
 import:
 - package: github.com/urfave/cli
   version: ^1.18.0
+- package: github.com/spf13/cobra
+  subpackages:
+  - cobra
+- package: github.com/spf13/pflag

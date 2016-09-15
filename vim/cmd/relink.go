@@ -1,16 +1,17 @@
-package vim
+package cmd
 
 import (
 	"fmt"
 	"os"
 	"path/filepath"
 
-	"github.com/urfave/cli"
+	"github.com/spf13/cobra"
 )
 
 var (
-	customPreConfig = "~/.config/nvim/custom_preconfig"
-	customConfig    = "~/.config/nvim/custom_config"
+	customPreConfig           = "~/.config/nvim/custom_preconfig"
+	customConfig              = "~/.config/nvim/custom_config"
+	preConfigFlag, configFlag string
 )
 
 // init the config directories.  This defaults to the neovim location
@@ -25,6 +26,9 @@ func init() {
 	if err != nil {
 		panic(err.Error())
 	}
+
+	Relink.Flags().StringVar(&preConfigFlag, "pre-conf", customPreConfig, "Directory of the custom preconfig")
+	Relink.Flags().StringVar(&configFlag, "conf", customPreConfig, "Directory of the custom config")
 }
 
 // deleteIfSymlink will delete the pre and custom config dirs
@@ -76,23 +80,10 @@ func linkCustomConfig(newPreConfig, newConfig string) error {
 }
 
 // RelinkCommand the urfave/cli command for manually relinking
-var RelinkCommand = cli.Command{
-	Name:  "relink",
-	Usage: "Manually specify the directories you want as your preconfig and custom config.  Either are optional",
-	Flags: []cli.Flag{
-		cli.StringFlag{
-			Name:  "pre-conf",
-			Value: "",
-			Usage: "Directory of the custom preconfig",
-		},
-		cli.StringFlag{
-			Name:  "conf",
-			Value: "",
-			Usage: "Directory of the custom config",
-		},
-	},
-	Action: func(c *cli.Context) error {
-		preconf, conf := c.String("pre-conf"), c.String("conf")
-		return linkCustomConfig(preconf, conf)
+var Relink = &cobra.Command{
+	Use:   "relink",
+	Short: "Manually specify the directories you want as your preconfig and custom config.  Either are optional",
+	Run: func(cmd *cobra.Command, args []string) {
+		linkCustomConfig(preConfigFlag, configFlag)
 	},
 }
