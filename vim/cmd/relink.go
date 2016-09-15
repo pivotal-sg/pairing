@@ -85,7 +85,7 @@ func linkCustomConfig(newPreConfig, newConfig string) error {
 var Relink = &cobra.Command{
 	Use:   "relink",
 	Short: "Manually specify the directories you want as your preconfig and custom config.  Either are optional",
-	Run: func(cmd *cobra.Command, args []string) {
-		linkCustomConfig(preConfigFlag, configFlag)
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return linkCustomConfig(preConfigFlag, configFlag)
 	},
 }
